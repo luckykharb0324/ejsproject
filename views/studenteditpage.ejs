@@ -1,0 +1,72 @@
+<%- include ('./base/header.ejs') %>
+    <%- include ('./base/nav.ejs') %>
+        <div class="container">
+            <div class="alert text-center bg-primary my-3" style="color:rgb(255, 255, 255)">
+                <h5>Edit Student</h5>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col"></div>
+                <div class="col">
+                    <form action="/edit/student/<%= student._id %>" method="post">
+                        <div>
+                            <label class="form-lable">Roll NO</label>
+                            <input type="text" class="form-control" name="rollNO" value="<%= student.rollNO %>"></input>
+                        </div>
+                        <div>
+                            <label class="form-lable"> Student Name</label>
+                            <input type="text" class="form-control" name="studentName"
+                                value="<%= student.studentName %>"></input>
+                        </div>
+                        <div>
+                            <label class="form-lable">Father Name</label>
+                            <input type="text" class="form-control" name="fatherName"
+                                value="<%= student.fatherName %>"></input>
+                        </div>
+                        <div>
+                            <label for="course">Course</label><br>
+                            <select id="course" name="course" style="width:355px; padding:6px;">
+                                <option value="<%= student.course %>" selected>
+                                    <%= student.course %>
+                                </option>
+                                <option value="BCA">BCA</option>
+                                <option value="B.Tech">B.Tech</option>
+                                <option value="M.Tech">M.Tech</option>
+                                <option value="MCA">MCA</option>
+                            </select>
+                        </div>
+                        <label for="branch">Branch</label><br>
+                        <select id="branch" name="branch" style="width:355px; padding:6px;">
+                            <option value="<%= student.branch %>" selected>
+                                <%= student.branch %>
+                            </option>
+                            <option value="CSE">CSE</option>
+                            <option value="IT">IT</option>
+                            <option value="EC">EC</option>
+
+                        </select>
+                        <div>
+                            <label for="yearOfAdmission">Admission Year</label><br>
+                            <select id="yearOfAdmission" name="yearOfAdmission" style="width:355px; padding:6px;">
+                                <option value="<%= student.yearOfAdmission %>" selected>
+                                    <%= student.yearOfAdmission %>
+                                </option>
+                                <option value="2020">2020</option>
+                                <option value="2021">2021</option>
+                                <option value="2022">2022</option>
+                                <option value="2023">2023</option>
+                                <option value="2024">2024</option>
+                                <option value="2025">2025</option>
+                                <option value="2026">2026</option>
+
+                            </select>
+                        </div>
+                        <input type="submit" value="Add Student" class="btn btn-warning w-100 my-3"></input>
+
+                    </form>
+                </div>
+                <div class="col"></div>
+
+            </div>
+            <%- include ('./base/footer.ejs') %>
