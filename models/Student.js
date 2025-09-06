@@ -7,6 +7,7 @@ const studentSchema = new Schema({
     studentName: { type: String },
     fatherName: { type: String, required: true },
     motherName: { type: String, },
+    email: { type: String, },
     course: { type: String, required: true },
     branch: { type: String },
     yearOfAdmission: { type: String },

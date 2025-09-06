@@ -1,37 +1,282 @@
-<%- include ('./base/header.ejs') %>
-    <div class="container">
-        <div class="alert text-center bg-primary my-3" style="color:white">
-            <h4>Sign Up Form</h4>
-        </div>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col"></div>
-            <div class="col">
-                <form action="/add/user" method="post">
-                    <div>
-                        <label class="form-lable">First Name</label>
-                        <input type="text" class="form-control" name="firstName"></input>
-                    </div>
-                    <div>
-                        <label class="form-lable">Last Name</label>
-                        <input type="text" class="form-control" name="lastName"></input>
-                    </div>
-                    <div>
-                        <label class="form-lable">Email</label>
-                        <input type="text" class="form-control" name="email"></input>
-                    </div>
-                    <div>
-                        <label class="form-lable">Password</label>
-                        <input type="password" class="form-control" name="password"></input>
-                    </div>
-                    <input type="submit" value="Sign Up" class="btn btn-danger w-100 my-3"></input>
-                    <div>
-                        <a href="/" class="btn btn-warning w-100 my-3">Login</a>
-                    </div>
-                </form>
-            </div>
-            <div class="col"></div>
-        </div>
-    </div>
-    <%- include ('./base/footer.ejs') %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up</title>
+  <style>
+    /* Reset & font */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+    }
+
+    /* Background with gradient & animated floating circles */
+    body {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        overflow: hidden;
+    }
+
+    /* Floating shapes animation */
+    body::before, body::after {
+        content: "";
+        position: absolute;
+        width: 400px;
+        height: 400px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.08);
+        animation: float 12s infinite ease-in-out;
+    }
+
+    body::before {
+        top: -100px;
+        left: -100px;
+        animation-delay: 0s;
+    }
+
+    body::after {
+        bottom: -150px;
+        right: -150px;
+        animation-delay: 6s;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0) rotate(0); }
+        50% { transform: translateY(-40px) rotate(45deg); }
+    }
+
+    /* Main container (glass effect) */
+    .signup-container {
+        display: flex;
+        flex-wrap: wrap;
+        width: 850px;
+        max-width: 95%;
+        background: rgba(255, 255, 255, 0.12);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        animation: fadeIn 1s ease-in-out;
+        position: relative;
+        z-index: 2;
+    }
+
+    /* Fade-in animation */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Form section */
+    .form-section {
+        flex: 1;
+        padding: 50px;
+        color: #fff;
+        animation: slideIn 1s ease forwards;
+    }
+
+    @keyframes slideIn {
+        from { opacity: 0; transform: translateX(-50px); }
+        to { opacity: 1; transform: translateX(0); }
+    }
+
+    .form-title {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    /* Inputs */
+    .form-label {
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 6px;
+        display: block;
+        color: #eee;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 14px;
+        margin-bottom: 20px;
+        border-radius: 10px;
+        border: none;
+        font-size: 15px;
+        background: rgba(255, 255, 255, 0.15);
+        color: #fff;
+        outline: none;
+        transition: 0.3s;
+    }
+
+    .form-control:focus {
+        background: rgba(255, 255, 255, 0.25);
+        box-shadow: 0 0 8px #00f2fe, 0 0 12px #4facfe;
+        transform: scale(1.03);
+    }
+
+    /* Button */
+    .btn-signup {
+        width: 100%;
+        padding: 14px;
+        border-radius: 10px;
+        border: none;
+        font-size: 16px;
+        font-weight: 600;
+        background: linear-gradient(135deg, #00f2fe, #4facfe);
+        color: #fff;
+        cursor: pointer;
+        transition: 0.4s;
+    }
+
+    .btn-signup:hover {
+        transform: scale(1.08);
+        box-shadow: 0 0 20px rgba(79, 172, 254, 0.9);
+    }
+
+    /* Login link */
+    .login-link {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 14px;
+        color: #eee;
+    }
+
+    .login-link a {
+        color: #00f2fe;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .login-link a:hover {
+        text-decoration: underline;
+    }
+
+    /* Logo section with rotating glow */
+    .logo-section {
+        flex: 1;
+        background: linear-gradient(135deg, #4facfe, #00f2fe);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 40px;
+        color: #fff;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        animation: slideInRight 1s ease forwards;
+    }
+
+    @keyframes slideInRight {
+        from { opacity: 0; transform: translateX(50px); }
+        to { opacity: 1; transform: translateX(0); }
+    }
+
+    .logo-section::before {
+        content: "";
+        position: absolute;
+        width: 180%;
+        height: 180%;
+        background: radial-gradient(circle at center, rgba(255,255,255,0.15), transparent 70%);
+        animation: rotate 12s linear infinite;
+    }
+
+    @keyframes rotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+
+    .logo-container {
+        position: relative;
+        z-index: 2;
+    }
+
+    .logo-icon {
+        margin-bottom: 20px;
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.1); opacity: 0.8; }
+    }
+
+    .logo-text {
+        font-size: 28px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-shadow: 0 0 15px rgba(255,255,255,0.7);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .signup-container {
+            flex-direction: column;
+        }
+        .form-section {
+            padding: 30px;
+        }
+        .logo-section {
+            padding: 25px;
+        }
+    }
+  </style>
+</head>
+<body>
+  <div class="signup-container">
+      <!-- Form Section -->
+      <div class="form-section">
+          <h2 class="form-title">Welcome to Our Community</h2>
+          <form action="/add/user" method="POST">
+              <div class="mb-3">
+                  <label for="firstName" class="form-label">First Name</label>
+                  <input type="text" class="form-control" id="firstName" name="firstName" required>
+              </div>
+              
+              <div class="mb-3">
+                  <label for="lastName" class="form-label">Last Name</label>
+                  <input type="text" class="form-control" id="lastName" name="lastName" required>
+              </div>
+              
+              <div class="mb-3">
+                  <label for="email" class="form-label">Email Address</label>
+                  <input type="email" class="form-control" id="email" name="email" required>
+              </div>
+              
+              <div class="mb-3">
+                  <label for="password" class="form-label">Password</label>
+                  <input type="password" class="form-control" id="password" name="password" required>
+              </div>
+              
+              <button type="submit" class="btn-signup w-100">Sign Up</button>
+              
+              <div class="login-link">
+                  <p>Already have an account? <a href="/">Login here</a></p>
+              </div>
+          </form>
+      </div>
+      
+      <!-- Logo Section -->
+      <div class="logo-section">
+          <div class="logo-container">
+              <div class="logo-icon">
+                  <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                      <circle cx="12" cy="7" r="4"></circle>
+                  </svg>
+              </div>
+              <div class="logo-text">WELCOME</div>
+              <p style="margin-top: 8px; opacity: 0.8; font-size: 14px;">Join our community today</p>
+          </div>
+      </div>
+  </div>
+</body>
+</html>
